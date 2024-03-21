@@ -1,0 +1,3 @@
+/home/moisibot/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/GestionContactos.dir
+/home/moisibot/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/moisibot/CLionProjects/GestionContactos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
