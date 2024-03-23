@@ -13,4 +13,10 @@ add_executable(GestionContactos main.cpp
         CrearGrupo/MenuCrear.cpp
         CrearGrupo/MenuCrear.h
         IngresarContacto/IngresarContacto.cpp
-        IngresarContacto/IngresarContacto.h)
+        IngresarContacto/IngresarContacto.h
+        IngresarContacto/ListaOrdenada.cpp
+        IngresarContacto/ListaOrdenada.h
+        IngresarContacto/Insercion.cpp
+        IngresarContacto/Insercion.h
+        IngresarContacto/BusquedaBinaria.cpp
+        IngresarContacto/BusquedaBinaria.h)

@@ -1,0 +1,12 @@
+
+
+#ifndef GESTIONCONTACTOS_INSERCION_H
+#define GESTIONCONTACTOS_INSERCION_H
+
+
+class Insercion {
+
+};
+
+
+#endif //GESTIONCONTACTOS_INSERCION_H

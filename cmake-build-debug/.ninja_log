@@ -1,7 +1,10 @@
 # ninja log v5
-1	451	1711121662990157361	CMakeFiles/GestionContactos.dir/CrearGrupo/MenuCrear.cpp.o	aecefcf3a6d2c174
+2	19	1711179165609806750	CMakeFiles/GestionContactos.dir/IngresarContacto/Insercion.cpp.o	90b981177b75183a
+1	703	1711176307953073310	CMakeFiles/GestionContactos.dir/CrearGrupo/MenuCrear.cpp.o	aecefcf3a6d2c174
 0	438	1711121662978157564	CMakeFiles/GestionContactos.dir/main.cpp.o	acbaf6d663987447
 1	12	1711121705029442467	CMakeFiles/GestionContactos.dir/TiposDatos.cpp.o	a3ecaec8ca7b6fac
-391	456	1711121728709035917	GestionContactos	a5141dcd753596b1
+305	368	1711179165953804091	GestionContactos	f41b840eb86a1dc9
+1	715	1711176307965073492	CMakeFiles/GestionContactos.dir/IngresarContacto/IngresarContacto.cpp.o	86e5719e7ef897a0
 0	13	1711121692813651116	CMakeFiles/GestionContactos.dir/Busqueda.cpp.o	f7b9bbf101cbf090
-1	391	1711121728645037019	CMakeFiles/GestionContactos.dir/Menu.cpp.o	95b2ba481de99a5e
+1	305	1711179165897804525	CMakeFiles/GestionContactos.dir/IngresarContacto/ListaOrdenada.cpp.o	959b3b1dbf4bba79
+1	703	1711176307953073310	CMakeFiles/GestionContactos.dir/Menu.cpp.o	95b2ba481de99a5e
