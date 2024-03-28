@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(GestionContactos main.cpp
         Menu.cpp
         Menu.h
-        Busqueda.cpp
-        Busqueda.h
         TiposDatos.cpp
         TiposDatos.h
         CrearGrupo/MenuCrear.cpp
@@ -19,4 +17,12 @@ add_executable(GestionContactos main.cpp
         IngresarContacto/Insercion.cpp
         IngresarContacto/Insercion.h
         IngresarContacto/BusquedaBinaria.cpp
-        IngresarContacto/BusquedaBinaria.h)
+        IngresarContacto/BusquedaBinaria.h
+        ArbolesAVL/Busqueda.cpp
+        ArbolesAVL/Busqueda.h
+        ArbolesAVL/AVL.cpp
+        ArbolesAVL/AVL.h
+        Grupo.cpp
+        Grupo.h
+        ListaEnlazada.cpp
+        ListaEnlazada.h)

@@ -17,7 +17,7 @@ void Menu::menu() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             opcion = -1;
         }
-        cout << "1. Creacion de grupo " << endl;
+        cout << "1. Creacion de minigrupo " << endl;
         cout << "2. Ingresar contacto" << endl;
         cout << "3. Busqueda de contacto" << endl;
         cout << "4. Menu de reportes" << endl;
