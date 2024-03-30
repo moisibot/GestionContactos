@@ -4,40 +4,44 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <filesystem>
+#include "string"
+#include "sstream"
 class ListaEnlazada;
-
 using namespace std;
+
 enum TipoDato { STRING, INTEGER, CHAR, DATE };
 class Contacto {
 public:
-    string nombre;
-    string apellido;
+    std::string nombre;
+    std::string apellido;
     int telefono;
-    string email;
-    Contacto() {}
-    Contacto(string nombre, string apellido, int telefono, string email) {
-        this->nombre = nombre;
-        this->apellido = apellido;
-        this->telefono = telefono;
-        this->email = email;
-    }
+    std::string email;
+
+    Contacto() = default;
+    Contacto(std::string nombre, std::string apellido, int telefono, std::string email);
 };
 
 class Grupo {
 public:
-    string nombre;
-    map<string, Contacto> contactos;
-    string campos;  // Lista de campos del formulario (separados por coma)
+    std::string nombre;
+    std::map<string, Contacto> contactos;
+    std::string campos;  // Lista de campos del formulario (separados por coma)
     ListaEnlazada* grupos;
+    Grupo() = default;
+    Grupo(std::string nombre);
 
-    Grupo() {}
+    void agregarContacto(const Contacto& contacto);
+    void mostrarContactos() const;
+    void crearFormulario(const std::string& camposStr);
+    static Grupo* analizarCampos(const std::string& entrada);
+    void solicitarValoresCampos();
+    void crearCarpeta();
 
-    Grupo(string nombre) {
-        this->nombre = nombre;
-    }
-    void agregarContacto(Contacto contacto);
-    void mostrarContactos();
-    // Nuevo método
-    void crearFormulario(string campos);
+private:
+    TipoDato stringToTipoDato(const std::string& tipoDatoStr) const;
+    std::string tipoDatoToString(TipoDato tipoDato) const;
+    std::filesystem::path rutaCarpeta;
+    bool validarValor(const string &valor, TipoDato tipoDato) const;
 };
 #endif //GESTIONCONTACTOS_GRUPO_H

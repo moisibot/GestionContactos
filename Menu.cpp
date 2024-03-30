@@ -3,7 +3,6 @@
 #include "Menu.h"
 #include "iostream"
 #include "CrearGrupo/MenuCrear.h"
-#include "IngresarContacto/IngresarContacto.h"
 
 using namespace std;
 
@@ -33,11 +32,6 @@ void Menu::menu() {
             }
                 break;
             case 2:
-            {
-                IngresarContacto ingresarContacto;
-                ingresarContacto.ingresar();
-
-            }
                 break;
 
             case 3:

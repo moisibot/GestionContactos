@@ -2,21 +2,18 @@
 #include "MenuCrear.h"
 #include "iostream"
 #include "string"
-
-#include "limits"
 #include "../Grupo.h"
 #include "../ListaEnlazada.h"
 
 using namespace std;
 
 MenuCrear::MenuCrear() =default;
-ListaEnlazada listarGrupos;
+ListaEnlazada listaGrupos;
 
 void MenuCrear::menu() {
     int opcion;
-    Grupo grupoActual;
-    string nombreGrupo;
-    Grupo grupo;
+    Grupo* grupoActual = nullptr;
+    string entrada;
 
     do {
         if (cin.fail()) {
@@ -24,35 +21,35 @@ void MenuCrear::menu() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             opcion = -1;
         }
-        cout << "1. crear un minigrupo " << endl;
-        cout << "2. regresar " << endl;
-        cout<<"3. ver grupos"<<endl;
+        cout << "1. Crear un minigrupo " << endl;
+        cout << "2. Regresar " << endl;
+        cout << "3. Ver grupos" << endl;
         cin >> opcion;
         switch (opcion) {
             case 1:
-
-                cout << "Ingrese el nombre del minigrupo: ";
-                cin >> nombreGrupo;
-                try {
-                    grupoActual = Grupo(nombreGrupo);
-                    cout << "Grupo creado exitosamente!" << endl;
-                } catch (const std::exception& e) {
-                    cout << "Error al crear el minigrupo: " << e.what() << endl;
+                std::cout << "Ingrese el comando para crear un nuevo grupo (ADD NEW-GROUP nombreGrupo FIELDS (campo1 TipoDato, campo2 TipoDato, ...)): ";
+                std::cin.ignore();
+                std::getline(std::cin, entrada);
+                grupoActual = Grupo::analizarCampos(entrada);
+                if (grupoActual) {
+                    listaGrupos.agregarGrupo(*grupoActual);
+                    std::cout << "Grupo creado exitosamente!" << std::endl;
+                    delete grupoActual;
+                } else {
+                    std::cout << "Error al crear el grupo" << std::endl;
                 }
                 break;
 
+
             case 2:
-                cout<<" adio pe causa"<<endl;
+                cout << " Adios pe causa" << endl;
                 break;
             case 3:
-
-                grupo.mostrarContactos();
-
+                listaGrupos.mostrarGrupos();
                 break;
             default:
-                cout<<"opcion invalida"<<endl;
+                cout << "Opcion invalida" << endl;
                 break;
         }
-    }while(opcion!=2);
+    } while (opcion != 2);
 }
-
