@@ -14,7 +14,8 @@ void MenuCrear::menu() {
     int opcion;
     Grupo* grupoActual = nullptr;
     string entrada;
-
+    std::string nombreGrupo;
+    Grupo* nuevoGrupo = new Grupo(nombreGrupo);
     do {
         if (cin.fail()) {
             cin.clear();
@@ -27,20 +28,20 @@ void MenuCrear::menu() {
         cin >> opcion;
         switch (opcion) {
             case 1:
-                std::cout << "Ingrese el comando para crear un nuevo grupo (ADD NEW-GROUP nombreGrupo FIELDS (campo1 TipoDato, campo2 TipoDato, ...)): ";
+                std::cout << "Ingrese el nombre del grupo: ";
                 std::cin.ignore();
-                std::getline(std::cin, entrada);
-                grupoActual = Grupo::analizarCampos(entrada);
-                if (grupoActual) {
-                    listaGrupos.agregarGrupo(*grupoActual);
-                    std::cout << "Grupo creado exitosamente!" << std::endl;
-                    delete grupoActual;
-                } else {
-                    std::cout << "Error al crear el grupo" << std::endl;
+                std::getline(std::cin, nombreGrupo);
+
+                nuevoGrupo = new Grupo(nombreGrupo);
+                if (!nuevoGrupo->existeCarpeta()) {
+                    nuevoGrupo->crearCarpeta();
                 }
+                nuevoGrupo->crearFormulario("Nombre:STRING,Apellido:STRING,Telefono:INTEGER,Email:STRING");
+                nuevoGrupo->solicitarValoresCampos();
+                listaGrupos.agregarGrupo(*nuevoGrupo);
+                std::cout << "Grupo creado exitosamente!" << std::endl;
+                delete nuevoGrupo;
                 break;
-
-
             case 2:
                 cout << " Adios pe causa" << endl;
                 break;
@@ -48,7 +49,7 @@ void MenuCrear::menu() {
                 listaGrupos.mostrarGrupos();
                 break;
             default:
-                cout << "Opcion invalida" << endl;
+                cout << "opcion invalida" << endl;
                 break;
         }
     } while (opcion != 2);

@@ -16,12 +16,10 @@ void ListaEnlazada::agregarGrupo(Grupo grupo) {
         ultimoNodo = nuevoNodo;
     }
 }
-
 void ListaEnlazada::mostrarGrupos() {
     Nodo* actual = primerNodo;
     while (actual != nullptr) {
         cout << "Nombre del minigrupo: " << actual->minigrupo->nombre << endl;
-        // ... (mostrar información del minigrupo)
         actual = actual->siguiente;
     }
 }

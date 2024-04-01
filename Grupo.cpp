@@ -5,6 +5,7 @@
 #include <sstream>
 #include "filesystem"
 #include "vector"
+#include "fstream"
 Contacto::Contacto(std::string nombre, std::string apellido, int telefono, std::string email) {
     this->nombre = std::move(nombre);
     this->apellido = std::move(apellido);
@@ -27,41 +28,15 @@ void Grupo::mostrarContactos() const {
 void Grupo::crearFormulario(const std::string& camposStr) {
     campos = camposStr;
 }
-/*
-Grupo* Grupo::analizarCampos(const std::string& entrada) {
-    try{
-    std::istringstream iss(entrada);
-    std::string comando, nombreGrupo, camposStr;
-    iss >> comando;
-    if (comando != "ADD" && comando != "ADD NEW-GROUP") {
-        std::cout << "Comando invalido" << std::endl;
-        return nullptr;
+std::vector<std::string> split(const std::string& str, char delimiter) {
+    std::vector<std::string> tokens;
+    std::stringstream ss(str);
+    std::string token;
+    while (std::getline(ss, token, delimiter)) {
+        tokens.push_back(token);
     }
-    std::getline(iss >> std::ws, nombreGrupo, ' '); // Leer hasta el primer espacio
-    std::string temp;
-    std::getline(iss >> std::ws, temp, '('); // Leer hasta el paréntesis de apertura
-    if (temp != "FIELDS") {
-        std::cout << "Formato invalido" << std::endl;
-        return nullptr;
-    }
-    std::getline(iss, camposStr, ')'); // Leer hasta el paréntesis de cierre
-    camposStr = camposStr.substr(1); // Eliminar el paréntesis de apertura
-    std::istringstream camposStream(camposStr);
-    std::string campo;
-    std::string camposFormateados;
-    while (std::getline(camposStream, campo, ',')) {
-        camposFormateados += campo + ",";
-    }
-    camposFormateados.pop_back(); // Eliminar la última coma
-    Grupo* nuevoGrupo = new Grupo(nombreGrupo);
-    nuevoGrupo->crearFormulario(camposFormateados);
-    nuevoGrupo->crearCarpeta();
-    return nuevoGrupo;
-    } catch (const std::exception& e) {
-        std::cerr << "Error al analizar el comando: " << e.what() << std::endl;
-        return nullptr;
-    }
-}*/
+    return tokens;
+}
 Grupo* Grupo::analizarCampos(const std::string& entrada) {
     try {
         std::vector<std::string> tokens;
@@ -70,28 +45,35 @@ Grupo* Grupo::analizarCampos(const std::string& entrada) {
         while (std::getline(iss, token, ' ')) {
             tokens.push_back(token);
         }
-        if (tokens.size() != 4) {
+        if (tokens.size() < 5) {
             std::cout << "Formato invalido" << std::endl;
             return nullptr;
         }
-        if (tokens[0] != "ADD" && tokens[0] + " " + tokens[1] != "ADD NEW-GROUP") {
+        if (tokens[0] != "ADD" || tokens[1] != "NEW-GROUP") {
             std::cout << "Comando invalido" << std::endl;
             return nullptr;
         }
         const std::string& nombreGrupo = tokens[2];
+
         if (tokens[3] != "FIELDS" || tokens[4] != "(") {
             std::cout << "Formato invalido" << std::endl;
             return nullptr;
         }
+        size_t campoInicio = 5;
+        size_t campoFin = tokens.size() - 1;
+
         std::string camposStr;
-        for (size_t i = 5; i < tokens.size() - 1; ++i) {
-            camposStr += tokens[i] + ",";
-        }
-        camposStr += tokens.back();
-        if (!camposStr.empty() && camposStr.back() == ',') {
-            camposStr.pop_back();
+        for (size_t i = campoInicio; i < campoFin; ++i) {
+            camposStr += tokens[i];
+            if (i != campoFin - 1) {
+                camposStr += ",";
+            }
         }
 
+        if (tokens[tokens.size() - 1] != ")") {
+            std::cout << "Formato invalido" << std::endl;
+            return nullptr;
+        }
         Grupo* nuevoGrupo = new Grupo(nombreGrupo);
         nuevoGrupo->crearFormulario(camposStr);
         nuevoGrupo->crearCarpeta();
@@ -100,27 +82,6 @@ Grupo* Grupo::analizarCampos(const std::string& entrada) {
         std::cerr << "Error al analizar el comando: " << e.what() << std::endl;
         return nullptr;
     }
-}
-
-void Grupo::solicitarValoresCampos() {
-    size_t pos = 0;
-    while (pos != std::string::npos) {
-        std::string campo = campos.substr(pos, campos.find(",", pos) - pos);
-        TipoDato tipoDato = STRING;
-        if (campo.find(":") != std::string::npos) {
-            tipoDato = stringToTipoDato(campo.substr(campo.find(":") + 1));
-            campo = campo.substr(0, campo.find(":"));
-        }
-        std::string valor;
-        std::cout << "Ingrese " << campo << " (" << tipoDatoToString(tipoDato) << "): ";
-        std::getline(std::cin, valor);
-        while (!validarValor(valor, tipoDato)) {
-            std::cout << "Valor invalido. Ingrese nuevamente: ";
-            std::getline(std::cin, valor);
-        }
-        pos = campos.find(",", pos) + 1;
-    }
-    std::cout << "Formulario creado exitosamente!" << std::endl;
 }
 TipoDato Grupo::stringToTipoDato(const std::string& tipoDatoStr) const {
     if (tipoDatoStr == "STRING") {
@@ -156,14 +117,14 @@ bool Grupo::validarValor(const std::string& valor, TipoDato tipoDato) const {
         case INTEGER:
             for (char c : valor) {
                 if (!std::isdigit(c)) {
-                    std::cout << "Valor invalido. Debe ser un numero entero." << std::endl;
+                    std::cout << "ingrese un numero entero." << std::endl;
                     return false;
                 }
             }
             return true;
         case CHAR:
             if (valor.length() != 1) {
-                std::cout << "Valor invalido. Debe ser un solo caracter." << std::endl;
+                std::cout << "ingrese un solo caracter." << std::endl;
                 return false;
             }
             return true;
@@ -174,11 +135,11 @@ bool Grupo::validarValor(const std::string& valor, TipoDato tipoDato) const {
                 std::istringstream iss(valor);
                 iss >> dia >> delimitador >> mes >> delimitador >> anio;
                 if (mes < 1 || mes > 12 || dia < 1 || dia > 31 || anio < 1900 || anio > 2100) {
-                    std::cout << "Valor invalido. Debe ser una fecha valida (dd/mm/yyyy)." << std::endl;
+                    std::cout << "ingrese una fecha valida (dd/mm/yyyy)." << std::endl;
                     return false;
                 }
             } catch (std::exception& e) {
-                std::cout << "Valor invalido. Debe ser una fecha valida (dd/mm/yyyy)." << std::endl;
+                std::cout << "Vingrese una fecha valida (dd/mm/yyyy)." << std::endl;
                 return false;
             }
             return true;
@@ -186,13 +147,83 @@ bool Grupo::validarValor(const std::string& valor, TipoDato tipoDato) const {
             return false;
     }
 }
+
+
 void Grupo::crearCarpeta() {
     std::filesystem::path rutaBase("/home/moisibot/CLionProjects/GestionContactos/contactos");
     rutaCarpeta = rutaBase / nombre;
-    try {
-        std::filesystem::create_directory(rutaCarpeta);
-        std::cout << "Carpeta creada: " << rutaCarpeta << std::endl;
-    } catch (const std::filesystem::filesystem_error& e) {
-        std::cerr << "Error al crear la carpeta: " << e.what() << std::endl;
+    if (!std::filesystem::exists(rutaCarpeta)) {
+        try {
+            std::filesystem::create_directory(rutaCarpeta);
+            std::cout << "carpeta creada: " << rutaCarpeta << std::endl;
+        } catch (const std::filesystem::filesystem_error& e) {
+            std::cerr << "error al crear la carpeta: " << e.what() << std::endl;
+        }
+    } else {
+        std::cout << "La carpeta ya existe: " << rutaCarpeta << std::endl;
     }
+}
+
+void Grupo::solicitarValoresCampos() {
+    std::ofstream archivoContactos;
+    std::filesystem::path rutaArchivo = rutaCarpeta / "contactos.txt";
+    if (std::filesystem::exists(rutaArchivo)) {
+        archivoContactos.open(rutaArchivo, std::ios::app);
+    } else {
+        archivoContactos.open(rutaArchivo);
+    }
+    if (!archivoContactos) {
+        std::cerr << "Error al abrir el archivo contactos.txt" << std::endl;
+        return;
+    }
+    std::string nombre, apellido, email;
+    int telefono;
+    std::cout << "Ingrese los datos del contacto (ingrese 0 para omitir un campo):" << std::endl;
+    std::cout << "Nombre: ";
+    std::getline(std::cin, nombre);
+    if (nombre == "0") {
+        nombre = "";
+    }
+    std::cout << "Apellido: ";
+    std::getline(std::cin, apellido);
+    if (apellido == "0") {
+        apellido = "";
+    }
+    std::cout << "Teléfono: ";
+    std::string telefonoStr;
+    std::getline(std::cin, telefonoStr);
+    if (telefonoStr == "0") {
+        telefono = 0;
+    } else {
+        std::istringstream(telefonoStr) >> telefono;
+    }
+    std::cout << "Email: ";
+    std::getline(std::cin, email);
+    if (email == "0") {
+        email = "";
+    }
+    Contacto nuevoContacto(nombre, apellido, telefono, email);
+    agregarContacto(nuevoContacto);
+    rutaArchivo = rutaCarpeta / (nuevoContacto.nombre + ".txt");
+    std::ofstream archivoContacto(rutaArchivo);
+
+    if (!archivoContacto) {
+        std::cerr << "Error al abrir el archivo " << rutaArchivo << std::endl;
+        return;
+    }
+    guardarContacto(archivoContacto, nuevoContacto);
+    archivoContacto.close();
+}
+
+void Grupo::guardarContacto(std::ofstream& archivo, const Contacto& contacto) {
+    archivo << "Nombre: " << contacto.nombre << std::endl;
+    archivo << "Apellido: " << contacto.apellido << std::endl;
+    archivo << "Teléfono: " << contacto.telefono << std::endl;
+    archivo << "Email: " << contacto.email << std::endl;
+}
+
+bool Grupo::existeCarpeta() {
+    std::filesystem::path rutaBase("/home/moisibot/CLionProjects/GestionContactos");
+    rutaCarpeta = rutaBase / nombre;
+    return std::filesystem::exists(rutaCarpeta);
 }
