@@ -15,6 +15,7 @@ void IngresarContacto::ingresar() {
         }
         cout << "1. ingresar contacto" << endl;
         cout << "2. regresar " << endl;
+        cout<< "3;"<<endl;
         cin >> opcion;
         switch (opcion) {
             case 1:

@@ -3,6 +3,7 @@
 #include "Menu.h"
 #include "iostream"
 #include "CrearGrupo/MenuCrear.h"
+#include "IngresarContacto/IngresarContacto.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ Menu::Menu()= default;
 
 void Menu::menu() {
     int opcion;
+    IngresarContacto ingresar;
     do {
         if (cin.fail()) {
             cin.clear();
@@ -32,7 +34,11 @@ void Menu::menu() {
             }
                 break;
             case 2:
+
+                ingresar.ingresarContacto();
                 break;
+
+
 
             case 3:
 

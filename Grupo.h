@@ -6,6 +6,8 @@
 #include <filesystem>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
+
 class ListaEnlazada;
 enum TipoDato { STRING, INTEGER, CHAR, DATE };
 class Contacto {
@@ -20,9 +22,7 @@ public:
 
 class Grupo {
 public:
-    std::string nombre;
-    std::map<std::string, Contacto> contactos;
-    std::string campos;
+
     ListaEnlazada* grupos;
     Grupo() = default;
     Grupo(std::string nombre);
@@ -33,15 +33,20 @@ public:
     void solicitarValoresCampos();
     void crearCarpeta();
     void guardarContacto(std::ofstream& archivo, const Contacto& contacto);
-
     bool existeCarpeta();
+    std::string getNombreCampo()const{
+        return nombre;
+    }
 
+    std::string nombre;
 private:
     TipoDato stringToTipoDato(const std::string& tipoDatoStr) const;
     std::string tipoDatoToString(TipoDato tipoDato) const;
     std::filesystem::path rutaCarpeta;
     bool validarValor(const std::string& valor, TipoDato tipoDato) const;
 
+    std::unordered_map<std::string, Contacto> contactos;
+    std::string campos;
 };
 
 #endif // GESTIONCONTACTOS_GRUPO_H

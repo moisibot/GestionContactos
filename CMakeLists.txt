@@ -14,15 +14,17 @@ add_executable(GestionContactos main.cpp
         IngresarContacto/IngresarContacto.h
         IngresarContacto/ListaOrdenada.cpp
         IngresarContacto/ListaOrdenada.h
-        IngresarContacto/Insercion.cpp
-        IngresarContacto/Insercion.h
         IngresarContacto/BusquedaBinaria.cpp
         IngresarContacto/BusquedaBinaria.h
         ArbolesAVL/Busqueda.cpp
         ArbolesAVL/Busqueda.h
-        ArbolesAVL/AVL.cpp
-        ArbolesAVL/AVL.h
+        ArbolesAVL/AVLTree.cpp
+        ArbolesAVL/AVLTree.h
         Grupo.cpp
         Grupo.h
         ListaEnlazada.cpp
-        ListaEnlazada.h)
+        ListaEnlazada.h
+        ArbolesAVL/HashTable.cpp
+        ArbolesAVL/HashTable.h
+        IngresarContacto/Contacto.cpp
+        IngresarContacto/Contacto.h)
