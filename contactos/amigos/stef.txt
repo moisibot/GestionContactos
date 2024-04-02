@@ -1,4 +1,0 @@
-Nombre: stef
-Apellido: hernandez
-Teléfono: 654987321
-Email: 

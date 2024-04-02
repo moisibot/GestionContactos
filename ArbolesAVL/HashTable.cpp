@@ -5,7 +5,7 @@
 
 HashTable::HashTable(size_t initialSize) : hashTable(initialSize) {}
 
-void HashTable::insertContact(const Contacto& contacto, const std::string& campo) {
+void HashTable::insertContact(const ContactoIndi& contacto, const std::string& campo) {
     size_t index = hashFunction(campo);
     if (!hashTable[index]) {
         hashTable[index] = std::make_unique<AVLTree>();
@@ -16,7 +16,7 @@ void HashTable::insertContact(const Contacto& contacto, const std::string& campo
     }
 }
 
-std::vector<Contacto> HashTable::findContact(const std::string& campo, const std::string& valor) {
+std::vector<ContactoIndi> HashTable::findContact(const std::string& campo, const std::string& valor) {
     size_t index = hashFunction(campo);
     if (!hashTable[index]) {
         return {};  // Árbol AVL vacío

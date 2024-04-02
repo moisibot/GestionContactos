@@ -4,16 +4,18 @@
 #define GESTIONCONTACTOS_INGRESARCONTACTO_H
 
 
-#include "Contacto.h"
+#include "ContactoIndi.h"
+//#include "HashContacto.h"
 
 class IngresarContacto {
 public:
     IngresarContacto();
      void ingresar();
-
+    void ingresarContactoPorComando(const std::string& comando);
     void ingresarContacto();
 private:
-    void guardarContacto(std::ofstream& archivo, const Contacto& contacto);
+    void guardarContacto(std::ofstream& archivo, const ContactoIndi& contacto);
+    //HashContacto tablaHash;
 
 };
 

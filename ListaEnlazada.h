@@ -21,5 +21,7 @@ public:
     ListaEnlazada();
     void agregarGrupo(Grupo grupo);
     void mostrarGrupos();
+
+    virtual ~ListaEnlazada();
 };
 #endif // LISTA_ENLAZADA_H

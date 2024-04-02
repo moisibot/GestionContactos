@@ -3,10 +3,13 @@
 using namespace std;
 
 #include "IngresarContacto.h"
+//#include "HashContacto.h"
+
 IngresarContacto::IngresarContacto() =default;
 
 void IngresarContacto::ingresar() {
     int opcion;
+
     do {
         if (cin.fail()) {
             cin.clear();

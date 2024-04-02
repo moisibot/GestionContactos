@@ -1,4 +1,0 @@
-Nombre: mario
-Apellido: perez
-Teléfono: 9876543
-Email: 

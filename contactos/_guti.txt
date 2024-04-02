@@ -1,4 +1,0 @@
-Nombre: 
-Apellido: guti
-Teléfono: 3156498
-Email: 

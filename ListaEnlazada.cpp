@@ -4,6 +4,17 @@ ListaEnlazada::ListaEnlazada() {
     primerNodo = ultimoNodo = nullptr;
 }
 
+ListaEnlazada::~ListaEnlazada() {
+    Nodo* actual = primerNodo;
+    while (actual != nullptr) {
+        Nodo* temp = actual;
+        actual = actual->siguiente;
+        delete temp->minigrupo;
+        delete temp;
+    }
+
+}
+
 void ListaEnlazada::agregarGrupo(Grupo grupo) {
     Nodo* nuevoNodo = new Nodo();
     nuevoNodo->minigrupo = new Grupo();

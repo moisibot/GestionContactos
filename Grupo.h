@@ -11,6 +11,7 @@
 class ListaEnlazada;
 enum TipoDato { STRING, INTEGER, CHAR, DATE };
 class Contacto {
+
 public:
     std::string nombre;
     std::string apellido;
@@ -22,22 +23,25 @@ public:
 
 class Grupo {
 public:
+    explicit Grupo(std::string nombre);
 
-    ListaEnlazada* grupos;
-    Grupo() = default;
-    Grupo(std::string nombre);
     void agregarContacto(const Contacto& contacto);
-    void mostrarContactos() const;
     void crearFormulario(const std::string& camposStr);
-    static Grupo* analizarCampos(const std::string& entrada);
-    void solicitarValoresCampos();
+    void crearGrupoPorComando(const std::string& comando);
     void crearCarpeta();
+    void solicitarValoresCampos();
     void guardarContacto(std::ofstream& archivo, const Contacto& contacto);
     bool existeCarpeta();
+    void mostrarContactos() const;
+    ListaEnlazada* grupos;
+    Grupo() = default;
+
+    static Grupo* analizarCampos(const std::string& entrada);
+
     std::string getNombreCampo()const{
         return nombre;
     }
-
+    std::unordered_map<std::string, Contacto>& getContactos() const;
     std::string nombre;
 private:
     TipoDato stringToTipoDato(const std::string& tipoDatoStr) const;

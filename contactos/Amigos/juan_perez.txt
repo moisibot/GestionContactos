@@ -1,0 +1,4 @@
+Nombre: juan
+Apellido: perez
+Teléfono: 12345678
+Email: 0

@@ -4,14 +4,17 @@
 #include "iostream"
 #include "CrearGrupo/MenuCrear.h"
 #include "IngresarContacto/IngresarContacto.h"
-
+#include "IngresarContacto/ContactoIndi.h"
+#include "IngresarContacto/Busqueda.h"
 using namespace std;
-
 Menu::Menu()= default;
-
 void Menu::menu() {
     int opcion;
     IngresarContacto ingresar;
+    IngresarContacto ingresarContactoPorComando;
+   // Busqueda busqueda;
+    std::string nombreContacto;
+ //   std::vector<Contacto> contactosEncontrados;
     do {
         if (cin.fail()) {
             cin.clear();
@@ -35,14 +38,34 @@ void Menu::menu() {
                 break;
             case 2:
 
-                ingresar.ingresarContacto();
+               // ingresar.ingresarContacto();
+            {
+                std::string comando;
+                cout << "Ingrese el comando para agregar un nuevo contacto (formato: ADD NEW-CONTACT FIELDS [nombre=valor, apellido=valor, telefono=valor, email=valor];): ";
+                std::getline(cin >> std::ws, comando);
+                ingresar.ingresarContactoPorComando(comando);
+            }
+                //ingresar.ingresar();
+                break;
+            case 3: {
+                //Busqueda::buscarContacto();
+
+                Busqueda busqueda;
+                cout << "Ingrese el nombre del archivo del contacto que desea buscar: ";
+                cin >> nombreContacto;
+                ContactoIndi contactoEncontrado = busqueda.buscarContactoPorNombreArchivo(nombreContacto);
+                if (contactoEncontrado.getNombre() != "") {
+                    cout << "Contacto encontrado:" << endl;
+                    cout << "Nombre: " << contactoEncontrado.getNombre() << endl;
+                    cout << "Apellido: " << contactoEncontrado.getApellido() << endl;
+                    cout << "Teléfono: " << contactoEncontrado.getTelefono() << endl;
+                    cout << "Email: " << contactoEncontrado.getEmail() << endl;
+                } else {
+                    cout << "No se encontró ningún contacto con ese nombre de archivo." << endl;
+                }
+            }
                 break;
 
-
-
-            case 3:
-
-                break;
             case 4:
 
                 break;
@@ -59,9 +82,5 @@ void Menu::menu() {
                 cout<<"opcion invalida"<<endl;
                 break;
         }
-
-
     }while(opcion!=7);
-
-
 }

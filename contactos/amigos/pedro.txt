@@ -1,4 +1,0 @@
-Nombre: pedro
-Apellido: sapo
-Teléfono: 32165498
-Email: 

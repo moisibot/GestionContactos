@@ -12,8 +12,8 @@ class HashTable {
 public:
     HashTable(size_t initialSize = 5);
 
-    void insertContact(const Contacto& contacto, const std::string& campo);
-    std::vector<Contacto> findContact(const std::string& campo, const std::string& valor);
+    void insertContact(const ContactoIndi& contacto, const std::string& campo);
+    std::vector<ContactoIndi> findContact(const std::string& campo, const std::string& valor);
     void rehash();
 
 private:

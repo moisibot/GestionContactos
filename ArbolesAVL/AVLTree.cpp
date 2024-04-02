@@ -9,7 +9,7 @@
 #include "filesystem"
 #include "vector"
 #include "fstream"
-#include "../IngresarContacto/Contacto.h"
+#include "../IngresarContacto/ContactoIndi.h"
 
 AVLTree::AVLTree() : root(nullptr) {}
 
@@ -49,7 +49,7 @@ AVLTree::Node* AVLTree::leftRotate(Node* node) {
     return rightNode;
 }
 
-AVLTree::Node* AVLTree::insert(Node* node, const Contacto& data) {
+AVLTree::Node* AVLTree::insert(Node* node, const ContactoIndi& data) {
     if (!node) {
         return new Node(data);
     }
@@ -88,7 +88,7 @@ AVLTree::Node* AVLTree::insert(Node* node, const Contacto& data) {
     return node;
 }
 
-void AVLTree::insert(const Contacto& data) {
+void AVLTree::insert(const ContactoIndi& data) {
     root = insert(root, data);
 }
 
@@ -101,8 +101,8 @@ void AVLTree::remove(const std::string& campo, const std::string& valor) {
     root = remove(root, campo, valor);
 }
 
-std::vector<Contacto> AVLTree::find(Node* node, const std::string& valor) const {
-    std::vector<Contacto> result;
+std::vector<ContactoIndi> AVLTree::find(Node* node, const std::string& valor) const {
+    std::vector<ContactoIndi> result;
     if (!node) {
         return result;
     }
@@ -120,11 +120,11 @@ std::vector<Contacto> AVLTree::find(Node* node, const std::string& valor) const 
     return result;
 }
 
-std::vector<Contacto> AVLTree::find(const std::string& valor) const {
+std::vector<ContactoIndi> AVLTree::find(const std::string& valor) const {
     return find(root, valor);
 }
 
-std::vector<Contacto> AVLTree::getAllContacts() const {
+std::vector<ContactoIndi> AVLTree::getAllContacts() const {
     std::vector<Contacto> result;
     // Implementar la función para obtener todos los contactos en orden
     return result;

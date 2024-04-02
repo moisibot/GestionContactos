@@ -1,0 +1,5 @@
+Nombre: 
+Apellido: Pérez
+Teléfono: 12345678
+Email: juan.perez@example.co
+
